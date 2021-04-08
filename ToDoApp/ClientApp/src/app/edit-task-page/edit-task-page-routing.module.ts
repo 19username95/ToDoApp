@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { NavigationComponent } from './navigation/navigation.component';
+import { EditTaskComponent } from './edit-task/edit-task.component';
 
 const routes: Routes = [
-  { path: '', component: NavigationComponent }
+  { path: '', component: EditTaskComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class NavigationPageRoutingModule { }
+export class EditTaskPageRoutingModule { }

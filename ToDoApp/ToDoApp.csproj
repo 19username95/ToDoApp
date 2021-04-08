@@ -18,9 +18,18 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\404-page\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\404-page\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\404-page\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\404-page\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\404-page\404-page-routing.module.ts" />
+    <None Remove="ClientApp\src\app\404-page\404-page.module.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
