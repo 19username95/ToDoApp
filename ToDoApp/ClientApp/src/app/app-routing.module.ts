@@ -16,7 +16,7 @@ const routes: Routes = [
     loadChildren: () => import('./add-task-page/add-task-page.module').then(m => m.AddTaskPageModule)
   },
   {
-    path: 'task-id',
+    path: 'task/:id',
     loadChildren: () => import('./edit-task-page/edit-task-page.module').then(m => m.EditTaskPageModule)
   },
   {

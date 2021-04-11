@@ -1,5 +1,9 @@
+<div *ngIf="!tasks.length">Loading...</div>
 <div *ngFor="let t of tasks">
   <span>  {{t?.title}}  </span>
   <span>  {{t?.dueDate}}  </span>
   <span>  {{t?.isComplete}} </span>
+  <span *ngIf="t.id" routerLink="/task/{{t.id}}">  Edit  </span>
 </div>
+
+<button><a routerLink="/add-task">Add New Task</a></button>

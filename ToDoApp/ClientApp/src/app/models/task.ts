@@ -3,5 +3,5 @@ export class Task {
     public id?: number,
     public title?: string,
     public dueDate?: Date,
-    public isComplete?: number) { }
+    public isComplete?: boolean) { }
 }

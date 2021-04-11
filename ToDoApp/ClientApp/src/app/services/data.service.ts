@@ -19,7 +19,14 @@ export class DataService {
   }
 
   createTask(task: Task) {
-    return this.http.post(this.url, task);
+    console.log(1231)
+    return fetch(this.url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(task)
+    });
   }
   updateTask(task: Task) {
 

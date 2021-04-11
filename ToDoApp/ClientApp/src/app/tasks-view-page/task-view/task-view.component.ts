@@ -11,9 +11,10 @@ import { DataService } from '../../services/data.service';
 export class TaskViewComponent implements OnInit {
   task: Task = new Task();
   tasks: Task[];
-  a: string;
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService) {
+   // this.loadTasks();
+  }
 
   ngOnInit() {
     this.loadTasks();
