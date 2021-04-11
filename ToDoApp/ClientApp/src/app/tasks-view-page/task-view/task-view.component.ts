@@ -32,8 +32,6 @@ export class TaskViewComponent implements OnInit {
 
   save() {
     if (this.task.id == null) {
-      this.dataService.createTask(this.task)
-        .subscribe((data: Task) => this.tasks.push(data));
     } else {
       this.dataService.updateTask(this.task)
         .subscribe(data => this.loadTasks());

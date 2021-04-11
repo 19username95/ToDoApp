@@ -19,7 +19,6 @@ export class DataService {
   }
 
   createTask(task: Task) {
-    console.log(1231)
     return fetch(this.url, {
       method: 'POST',
       headers: {
@@ -29,8 +28,13 @@ export class DataService {
     });
   }
   updateTask(task: Task) {
-
-    return this.http.put(this.url, task);
+    return fetch(this.url + '/' + task.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(task)
+    });
   }
   deleteTask(id: number) {
     return this.http.delete(this.url + '/' + id);
