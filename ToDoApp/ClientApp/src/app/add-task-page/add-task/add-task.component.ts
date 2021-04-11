@@ -25,7 +25,6 @@ export class AddTaskComponent implements OnInit {
   async add(f: NgForm) {
     this.task.title = f.value.title;
     this.task.dueDate = f.value.dueDate;
-    console.log(this.task);
 
     try {
       const res = await this.dataService.createTask(this.task);

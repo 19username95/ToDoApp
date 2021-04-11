@@ -22,7 +22,6 @@ export class EditTaskComponent implements OnInit {
         await this.dataService.getTask(data.id)
           .subscribe((task: Task) => {
             this.task = task
-            console.log(this.task)
           });
       });
 
@@ -36,7 +35,6 @@ export class EditTaskComponent implements OnInit {
   async save(f: NgForm) {
     this.task.title = f.value.title;
     this.task.dueDate = f.value.dueDate;
-    console.log(this.task);
 
     try {
       const res = await this.dataService.updateTask(this.task);
@@ -49,8 +47,6 @@ export class EditTaskComponent implements OnInit {
   }
 
   async delete() {
-    console.log(this.task);
-
     try {
       const res = await this.dataService.deleteTask(this.task.id);
       console.log('res', res)

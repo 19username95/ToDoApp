@@ -19,14 +19,12 @@ export class TaskViewComponent implements OnInit {
   ngOnInit() {
     this.loadTasks();
     this.tasks = [];
-    console.log(this.tasks);
   }
 
   loadTasks() {
     this.dataService.getTasks()
       .subscribe((data: Task[]) => {
         this.tasks = data
-        console.log(this.tasks)
       });
   }
 
