@@ -34,22 +34,8 @@ export class TaskViewComponent implements OnInit {
     if (this.task.id == null) {
     } else {
       this.dataService.updateTask(this.task)
-        .subscribe(data => this.loadTasks());
+        //.subscribe(data => this.loadTasks());
     }
-    this.cancel();
-  }
-  editProduct(t: Task) {
-    this.task = t;
-  }
-  cancel() {
-    this.task = new Task();
-  }
-  delete(t: Task) {
-    this.dataService.deleteTask(t.id)
-      .subscribe(data => this.loadTasks());
-  }
-  add() {
-    this.cancel();
   }
 
 }

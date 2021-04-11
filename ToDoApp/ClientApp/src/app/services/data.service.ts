@@ -27,6 +27,7 @@ export class DataService {
       body: JSON.stringify(task)
     });
   }
+
   updateTask(task: Task) {
     return fetch(this.url + '/' + task.id, {
       method: 'PUT',
@@ -36,7 +37,14 @@ export class DataService {
       body: JSON.stringify(task)
     });
   }
+
   deleteTask(id: number) {
-    return this.http.delete(this.url + '/' + id);
+    return fetch(this.url + '/' + id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(id)
+    });
   }
 }

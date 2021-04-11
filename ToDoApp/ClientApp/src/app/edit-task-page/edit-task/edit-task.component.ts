@@ -47,4 +47,17 @@ export class EditTaskComponent implements OnInit {
 
     this.router.navigateByUrl('/tasks');
   }
+
+  async delete() {
+    console.log(this.task);
+
+    try {
+      const res = await this.dataService.deleteTask(this.task.id);
+      console.log('res', res)
+    } catch (err) {
+      console.log('err', err)
+    }
+
+    this.router.navigateByUrl('/tasks');
+  }
 }
