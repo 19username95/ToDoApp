@@ -1,1 +1,5 @@
-<p>task-view works!</p>
+<div *ngFor="let t of tasks">
+  <span>  {{t?.title}}  </span>
+  <span>  {{t?.dueDate}}  </span>
+  <span>  {{t?.isComplete}} </span>
+</div>

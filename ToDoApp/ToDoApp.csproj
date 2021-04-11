@@ -44,6 +44,17 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\404-page\404-page-routing.module.ts" />
     <None Remove="ClientApp\src\app\404-page\404-page.module.ts" />
+    <None Remove="ClientApp\src\app\models\task.ts" />
+    <None Remove="ClientApp\src\app\services\data.service.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\shared\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\task.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\data.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
