@@ -22,7 +22,7 @@ namespace ToDoApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks()
         {
-            return await _context.Tasks.ToListAsync();
+            return await _context.Tasks.OrderBy(t => t.DueDate).ToListAsync();
         }
 
         // GET: api/Tasks/5
