@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using ToDoApp.Models;
 
 namespace ToDoApp.Controllers
@@ -18,11 +19,47 @@ namespace ToDoApp.Controllers
             _context = context;
         }
 
-        // GET: api/Tasks
+        // GET: api/Tasks 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks()
+        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks(string sortOrder, 
+                                                                           string filterTitle, 
+                                                                           bool? filterCompleted = null, 
+                                                                           int perPage = 8, 
+                                                                           int page = 0)
         {
-            return await _context.Tasks.OrderBy(t => t.DueDate).ToListAsync();
+            IQueryable<Models.Task> tasksIQ = from t in _context.Tasks
+                                             select t;
+
+            // filtering
+            if (!String.IsNullOrEmpty(filterTitle))
+            {
+                tasksIQ = tasksIQ.Where(t => t.Title.ToUpper().Contains(filterTitle.ToUpper()));
+            }
+            if (filterCompleted != null)
+            {
+                tasksIQ = tasksIQ.Where(t => t.IsComplete == filterCompleted);
+            }
+
+            // sorting
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    tasksIQ = tasksIQ.OrderByDescending(t => t.Title);
+                    break;
+                case "title":
+                    tasksIQ = tasksIQ.OrderBy(t => t.Title);
+                    break;
+                case "date_desc":
+                    tasksIQ = tasksIQ.OrderByDescending(t => t.DueDate);
+                    break;
+                case "date":
+                default:
+                    tasksIQ = tasksIQ.OrderBy(t => t.DueDate);
+                    break;
+            }
+
+
+            return await tasksIQ.ToListAsync();
         }
 
         // GET: api/Tasks/5
