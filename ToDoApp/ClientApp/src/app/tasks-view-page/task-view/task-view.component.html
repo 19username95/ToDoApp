@@ -2,7 +2,6 @@
 <form>
   <input name="searchString" type="text" [(ngModel)]="searchString" class="form-control"
          (keydown.enter)="search()" placeholder="Input and press Enter for Search" />
-  <!--<button (click)="search()">Search</button>-->
 </form>
 <div *ngFor="let t of tasks">
   <span>  {{t?.title}}  </span>
