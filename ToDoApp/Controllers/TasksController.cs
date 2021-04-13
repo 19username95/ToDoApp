@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,11 @@ namespace ToDoApp.Controllers
 
         // GET: api/Tasks 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks(string sortOrder, 
-                                                                           string filterTitle, 
+        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks(string? sortOrder, 
+                                                                           string? filterTitle, 
                                                                            bool? filterCompleted = null, 
                                                                            int perPage = 8, 
-                                                                           int page = 0)
+                                                                           int pageIndex = 0)
         {
             IQueryable<Models.Task> tasksIQ = from t in _context.Tasks
                                              select t;
@@ -58,8 +59,7 @@ namespace ToDoApp.Controllers
                     break;
             }
 
-
-            return await tasksIQ.ToListAsync();
+            return await tasksIQ.Skip(pageIndex * perPage).Take((pageIndex + 1) * perPage).ToListAsync();
         }
 
         // GET: api/Tasks/5
