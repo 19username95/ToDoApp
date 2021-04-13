@@ -10,8 +10,17 @@ export class DataService {
   constructor(private http: HttpClient) {
   }
 
-  getTasks() {
-    return this.http.get(this.url);
+  async getTasks(query = {}) {
+    try {
+      const queryString = Object.keys(query).map(key => `${key}=${query[key]}`).join('&')
+      const res = await fetch(`${this.url}?${queryString}`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json;charset=utf-8' },
+      });
+      return res.json()
+    } catch (err) {
+      console.log('DataService | getTasks', err)
+    }
   }
 
   getTask(id: number) {

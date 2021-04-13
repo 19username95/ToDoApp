@@ -14,6 +14,10 @@ namespace ToDoApp.Controllers
     public class TasksController : ControllerBase
     {
         private readonly TaskContext _context;
+        
+        private string CurrentSort { get; set; }
+        private string CurrentFilterTitle { get; set; }
+        private bool? CurrentFilterCompleted { get; set; }
 
         public TasksController(TaskContext context)
         {
@@ -22,27 +26,40 @@ namespace ToDoApp.Controllers
 
         // GET: api/Tasks 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks(string? sortOrder, 
-                                                                           string? filterTitle, 
-                                                                           bool? filterCompleted = null, 
-                                                                           int perPage = 8, 
-                                                                           int pageIndex = 0)
+        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks([FromQuery(Name = "order")] string? sortOrder,
+                                                                           [FromQuery(Name = "title")] string? filterTitle,
+                                                                           [FromQuery(Name = "completed")] bool? filterCompleted,
+                                                                           [FromQuery(Name = "perPage")] int perPage = 8,
+                                                                           [FromQuery(Name = "page")] int pageIndex = 0)
         {
+            if (!String.IsNullOrEmpty(sortOrder))
+            {
+                CurrentSort = sortOrder;
+            }
+            if (!String.IsNullOrEmpty(filterTitle))
+            {
+                CurrentFilterTitle = filterTitle;
+            }
+            if (filterCompleted != null)
+            {
+                CurrentFilterCompleted = filterCompleted;
+            }
+
             IQueryable<Models.Task> tasksIQ = from t in _context.Tasks
                                              select t;
 
             // filtering
-            if (!String.IsNullOrEmpty(filterTitle))
+            if (!String.IsNullOrEmpty(CurrentFilterTitle))
             {
                 tasksIQ = tasksIQ.Where(t => t.Title.ToUpper().Contains(filterTitle.ToUpper()));
             }
-            if (filterCompleted != null)
+            if (CurrentFilterCompleted != null)
             {
                 tasksIQ = tasksIQ.Where(t => t.IsComplete == filterCompleted);
             }
 
             // sorting
-            switch (sortOrder)
+            switch (CurrentSort)
             {
                 case "title_desc":
                     tasksIQ = tasksIQ.OrderByDescending(t => t.Title);

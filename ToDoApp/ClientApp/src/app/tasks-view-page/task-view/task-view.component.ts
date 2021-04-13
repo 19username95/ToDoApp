@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Task } from '../../models/task';
 import { DataService } from '../../services/data.service';
 
@@ -12,28 +14,41 @@ export class TaskViewComponent implements OnInit {
   task: Task = new Task();
   tasks: Task[];
 
-  constructor(private dataService: DataService) {
-   // this.loadTasks();
+  searchString: string;
+
+  constructor(private dataService: DataService,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.loadTasks();
     this.tasks = [];
+    this.loadTasks();
   }
 
-  loadTasks() {
-    this.dataService.getTasks()
-      .subscribe((data: Task[]) => {
-        this.tasks = data
-      });
+  async loadTasks() {
+    this.tasks = await this.dataService.getTasks();
   }
 
   save() {
-    if (this.task.id == null) {
-    } else {
-      this.dataService.updateTask(this.task)
-        //.subscribe(data => this.loadTasks());
+    if (this.task.id != null) {
+      this.dataService.updateTask(this.task);
+      this.loadTasks();
     }
   }
 
+  async search() {
+    this.tasks = await this.dataService.getTasks({
+      'title': this.searchString
+    })
+  }
+  /*
+  search() {
+    let navigationExtras: NavigationExtras = {
+      queryParams: { 'title': this.searchString },
+    };
+
+    // Navigate to the login page with extras
+    this.router.navigate(['/tasks'], navigationExtras);
+  }
+  */
 }
