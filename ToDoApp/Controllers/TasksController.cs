@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ToDoApp.Helpers;
 using ToDoApp.Models;
 
 namespace ToDoApp.Controllers
@@ -20,26 +21,13 @@ namespace ToDoApp.Controllers
             _context = context;
     }
 
-    public class TaskResponse
-    {
-        public int count { get; set; }
-
-        public List<Models.Task> array { get; set; }
-
-        public TaskResponse(int count, List<Models.Task> array)
-        {
-            this.array = array;
-            this.count = count;
-        }
-    }
-
     // GET: api/Tasks 
     [HttpGet]
         public async Task<ActionResult<TaskResponse>> GetTasks([FromQuery(Name = "order")] string? sortOrder,
-                                                                           [FromQuery(Name = "title")] string? filterTitle,
-                                                                           [FromQuery(Name = "filterCompleted")] bool? filterCompleted,
-                                                                           [FromQuery(Name = "perPage")] int perPage = 8,
-                                                                           [FromQuery(Name = "pageIndex")] int pageIndex = 0)
+                                                               [FromQuery(Name = "title")] string? filterTitle,
+                                                               [FromQuery(Name = "filterCompleted")] bool? filterCompleted,
+                                                               [FromQuery(Name = "perPage")] int perPage = 8,
+                                                               [FromQuery(Name = "pageIndex")] int pageIndex = 0)
         {
             IQueryable<Models.Task> tasksIQ = from t in _context.Tasks
                                              select t;
