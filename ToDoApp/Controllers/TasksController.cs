@@ -30,7 +30,7 @@ namespace ToDoApp.Controllers
         {
             IQueryable<Models.Task> tasksIQ = from t in _context.Tasks
                                              select t;
-
+            // TODO: query parser - undefined...
             // filtering
             if (!String.IsNullOrEmpty(filterTitle))
             {
