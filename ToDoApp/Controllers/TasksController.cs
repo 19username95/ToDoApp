@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ToDoApp.Models;
 
 namespace ToDoApp.Controllers
-{
+{ 
     [Route("api/[controller]")]
     [ApiController]
     public class TasksController : ControllerBase
@@ -18,19 +18,34 @@ namespace ToDoApp.Controllers
         public TasksController(TaskContext context)
         {
             _context = context;
-        }
+    }
 
-        // GET: api/Tasks 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks([FromQuery(Name = "order")] string? sortOrder,
+    public class TaskResponse
+    {
+        public int count { get; set; }
+
+        public List<Models.Task> array { get; set; }
+
+        public TaskResponse(int count, List<Models.Task> array)
+        {
+            this.array = array;
+            this.count = count;
+        }
+    }
+
+    // GET: api/Tasks 
+    [HttpGet]
+        public async Task<ActionResult<TaskResponse>> GetTasks([FromQuery(Name = "order")] string? sortOrder,
                                                                            [FromQuery(Name = "title")] string? filterTitle,
                                                                            [FromQuery(Name = "filterCompleted")] bool? filterCompleted,
                                                                            [FromQuery(Name = "perPage")] int perPage = 8,
-                                                                           [FromQuery(Name = "page")] int pageIndex = 0)
+                                                                           [FromQuery(Name = "pageIndex")] int pageIndex = 0)
         {
             IQueryable<Models.Task> tasksIQ = from t in _context.Tasks
                                              select t;
+
             // TODO: query parser - undefined...
+
             // filtering
             if (!String.IsNullOrEmpty(filterTitle))
             {
@@ -59,7 +74,11 @@ namespace ToDoApp.Controllers
                     break;
             }
 
-            return await tasksIQ.Skip(pageIndex * perPage).Take((pageIndex + 1) * perPage).ToListAsync();
+            int count = await tasksIQ.CountAsync();
+            List<Models.Task> array = await tasksIQ.Skip(pageIndex * perPage).Take(perPage).ToListAsync();
+            TaskResponse response = new TaskResponse(count, array);
+
+            return response;
         }
 
         // GET: api/Tasks/5

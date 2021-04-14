@@ -12,11 +12,15 @@ import { ORDERBY_TYPES } from './../../constants';
 export class TaskViewComponent implements OnInit {
   task: Task = new Task();
   tasks: Task[];
+  tasksResponse: { array: Array<Object>, count: number };
   orderTypes: Array<Object>;
 
   selectedOrder: string;
   searchString: string;
-  completedFilter: boolean;
+  completedFilter = false;
+  perPage = 8;
+  pageIndex = 0;
+  pagesCount = 0;
 
   constructor(private dataService: DataService) {
   }
@@ -25,29 +29,60 @@ export class TaskViewComponent implements OnInit {
     this.tasks = [];
     this.loadTasks();
     this.orderTypes = ORDERBY_TYPES;
+    this.perPage = 8;
+    this.pageIndex = 0;
+    this.pagesCount = Math.round(this.tasksResponse.count / this.perPage);
   }
 
   async loadTasks() {
-    this.tasks = await this.dataService.getTasks();
+    this.tasksResponse = await this.dataService.getTasks();
+    this.tasks = this.tasksResponse.array;
+    this.setCurrentPagesCount();
   }
   async refresh() {
-    console.log('HERE')
-    this.tasks = await this.dataService.getTasks({
+    this.tasksResponse = await this.dataService.getTasks({
       'title': this.searchString,
       'filterCompleted': this.completedFilter,
-      'order': this.selectedOrder
+      'order': this.selectedOrder,
+      'perPage': this.perPage,
+      'pageIndex': this.pageIndex
     });
+    this.tasks = this.tasksResponse.array;
+    this.setCurrentPagesCount();
+  }
+
+  setCurrentPagesCount() {
+    this.pagesCount = Math.round(this.tasksResponse.count / this.perPage);
   }
 
   save() {
     if (this.task.id != null) {
       this.dataService.updateTask(this.task);
-      this.loadTasks();
+      this.refresh();
     }
   }
 
   async orderBy(value) {
     this.selectedOrder = value;
     this.refresh();
+  }
+
+  perPageChange(value) {
+    this.perPage = value;
+    this.refresh();
+  }
+
+  async goNextPage() {
+    if (this.pageIndex < this.pagesCount - 1) {
+      this.pageIndex++;
+    this.refresh();
+    }
+  }
+
+  async goPrevPage() {
+    if (this.pageIndex > 0) {
+      this.pageIndex--;
+      this.refresh();
+    }
   }
 }
