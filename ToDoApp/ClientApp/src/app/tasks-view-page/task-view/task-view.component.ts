@@ -10,7 +10,6 @@ import { ORDERBY_TYPES } from './../../constants';
   providers: [DataService]
 })
 export class TaskViewComponent implements OnInit {
-  task: Task = new Task();
   tasks: Task[];
   tasksResponse: { array: Array<Object>, count: number };
   orderTypes: Array<Object>;
@@ -38,6 +37,7 @@ export class TaskViewComponent implements OnInit {
     this.tasks = this.tasksResponse.array;
     this.setCurrentPagesCount();
   }
+
   async refresh() {
     this.tasksResponse = await this.dataService.getTasks({
       'title': this.searchString,
