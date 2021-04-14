@@ -29,6 +29,7 @@ export class AddTaskComponent implements OnInit {
     try {
       const res = await this.dataService.createTask(this.task);
       console.log('res', res)
+      this.task = new Task;
     } catch(err) {
       console.log('err', err)
     }

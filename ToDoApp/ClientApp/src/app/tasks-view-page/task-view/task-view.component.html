@@ -1,8 +1,8 @@
-<div *ngIf="!tasks.length">Loading...</div>
 <form>
   <input name="searchString" type="text" [(ngModel)]="searchString" class="form-control"
          (keydown.enter)="search()" placeholder="Input and press Enter for Search" />
 </form>
+<div *ngIf="!tasks.length">Loading...</div>
 <div *ngFor="let t of tasks">
   <span>  {{t?.title}}  </span>
   <span>  {{t?.dueDate}}  </span>

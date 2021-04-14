@@ -41,14 +41,4 @@ export class TaskViewComponent implements OnInit {
       'title': this.searchString
     })
   }
-  /*
-  search() {
-    let navigationExtras: NavigationExtras = {
-      queryParams: { 'title': this.searchString },
-    };
-
-    // Navigate to the login page with extras
-    this.router.navigate(['/tasks'], navigationExtras);
-  }
-  */
 }
