@@ -31,7 +31,6 @@ export class TaskViewComponent implements OnInit {
     this.orderTypes = ORDERBY_TYPES;
     this.perPage = 8;
     this.pageIndex = 0;
-    this.pagesCount = Math.round(this.tasksResponse.count / this.perPage);
   }
 
   async loadTasks() {
@@ -55,11 +54,12 @@ export class TaskViewComponent implements OnInit {
     this.pagesCount = Math.round(this.tasksResponse.count / this.perPage);
   }
 
-  save() {
-    if (this.task.id != null) {
-      this.dataService.updateTask(this.task);
-      this.refresh();
-    }
+  async changeCompleteStatus(id) {
+    const task = this.tasks.find(t => t.id === id);
+    task.isComplete = !task.isComplete;
+    const res = await this.dataService.updateTask(task);
+    console.log(res);
+    this.refresh();
   }
 
   async orderBy(value) {

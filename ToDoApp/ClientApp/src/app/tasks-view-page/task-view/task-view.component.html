@@ -20,7 +20,7 @@
 <div *ngFor="let t of tasks">
   <span>  {{t?.title}}  </span>
   <span>  {{t?.dueDate}}  </span>
-  <span>  {{t?.isComplete}} </span>
+  <span (click)="changeCompleteStatus(t.id)">  {{t?.isComplete}} </span>
   <span *ngIf="t.id" routerLink="/task/{{t.id}}"> <button>edit</button></span>
 </div>
 
