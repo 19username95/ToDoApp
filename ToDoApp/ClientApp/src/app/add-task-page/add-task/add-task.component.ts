@@ -13,10 +13,7 @@ export class AddTaskComponent implements OnInit {
   task: Task = new Task;
 
   constructor(private dataService: DataService) {
-    this.task.id = 0;
-    this.task.title = "";
-    this.task.dueDate = new Date();
-    this.task.isComplete = false;
+    this.refresh();
   }
 
   ngOnInit() {
@@ -29,9 +26,16 @@ export class AddTaskComponent implements OnInit {
     try {
       const res = await this.dataService.createTask(this.task);
       console.log('res', res)
-      this.task = new Task;
+      this.refresh();
     } catch(err) {
       console.log('err', err)
     }
+  }
+
+  refresh() {
+    this.task.id = 0;
+    this.task.title = "";
+    this.task.dueDate = new Date();
+    this.task.isComplete = false;
   }
 }

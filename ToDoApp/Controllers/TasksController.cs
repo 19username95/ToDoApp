@@ -14,10 +14,6 @@ namespace ToDoApp.Controllers
     public class TasksController : ControllerBase
     {
         private readonly TaskContext _context;
-        
-        private string CurrentSort { get; set; }
-        private string CurrentFilterTitle { get; set; }
-        private bool? CurrentFilterCompleted { get; set; }
 
         public TasksController(TaskContext context)
         {
@@ -28,38 +24,25 @@ namespace ToDoApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks([FromQuery(Name = "order")] string? sortOrder,
                                                                            [FromQuery(Name = "title")] string? filterTitle,
-                                                                           [FromQuery(Name = "completed")] bool? filterCompleted,
+                                                                           [FromQuery(Name = "filterCompleted")] bool? filterCompleted,
                                                                            [FromQuery(Name = "perPage")] int perPage = 8,
                                                                            [FromQuery(Name = "page")] int pageIndex = 0)
         {
-            if (!String.IsNullOrEmpty(sortOrder))
-            {
-                CurrentSort = sortOrder;
-            }
-            if (!String.IsNullOrEmpty(filterTitle))
-            {
-                CurrentFilterTitle = filterTitle;
-            }
-            if (filterCompleted != null)
-            {
-                CurrentFilterCompleted = filterCompleted;
-            }
-
             IQueryable<Models.Task> tasksIQ = from t in _context.Tasks
                                              select t;
 
             // filtering
-            if (!String.IsNullOrEmpty(CurrentFilterTitle))
+            if (!String.IsNullOrEmpty(filterTitle))
             {
                 tasksIQ = tasksIQ.Where(t => t.Title.ToUpper().Contains(filterTitle.ToUpper()));
             }
-            if (CurrentFilterCompleted != null)
+            if (filterCompleted == true)
             {
-                tasksIQ = tasksIQ.Where(t => t.IsComplete == filterCompleted);
+                tasksIQ = tasksIQ.Where(t => t.IsComplete == false);
             }
 
             // sorting
-            switch (CurrentSort)
+            switch (sortOrder)
             {
                 case "title_desc":
                     tasksIQ = tasksIQ.OrderByDescending(t => t.Title);

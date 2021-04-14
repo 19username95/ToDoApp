@@ -12,7 +12,7 @@ export class DataService {
 
   async getTasks(query = {}) {
     try {
-      const queryString = Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
+      const queryString = Object.keys(query).filter(key => (typeof query[key]) !== 'undefined').map(key => `${key}=${query[key]}`).join('&');
       const res = await fetch(`${this.url}?${queryString}`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json;charset=utf-8' },

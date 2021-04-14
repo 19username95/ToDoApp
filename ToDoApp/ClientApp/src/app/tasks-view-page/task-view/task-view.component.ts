@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Task } from '../../models/task';
 import { DataService } from '../../services/data.service';
+import { ORDERBY_TYPES } from './../../constants';
 
 @Component({
   selector: 'app-task-view',
@@ -13,20 +12,31 @@ import { DataService } from '../../services/data.service';
 export class TaskViewComponent implements OnInit {
   task: Task = new Task();
   tasks: Task[];
+  orderTypes: Array<Object>;
 
+  selectedOrder: string;
   searchString: string;
+  completedFilter: boolean;
 
-  constructor(private dataService: DataService,
-              private router: Router) {
+  constructor(private dataService: DataService) {
   }
 
   ngOnInit() {
     this.tasks = [];
     this.loadTasks();
+    this.orderTypes = ORDERBY_TYPES;
   }
 
   async loadTasks() {
     this.tasks = await this.dataService.getTasks();
+  }
+  async refresh() {
+    console.log('HERE')
+    this.tasks = await this.dataService.getTasks({
+      'title': this.searchString,
+      'filterCompleted': this.completedFilter,
+      'order': this.selectedOrder
+    });
   }
 
   save() {
@@ -36,9 +46,8 @@ export class TaskViewComponent implements OnInit {
     }
   }
 
-  async search() {
-    this.tasks = await this.dataService.getTasks({
-      'title': this.searchString
-    })
+  async orderBy(value) {
+    this.selectedOrder = value;
+    this.refresh();
   }
 }

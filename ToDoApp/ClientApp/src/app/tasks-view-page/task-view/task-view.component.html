@@ -1,6 +1,12 @@
 <form>
   <input name="searchString" type="text" [(ngModel)]="searchString" class="form-control"
-         (keydown.enter)="search()" placeholder="Input and press Enter for Search" />
+         (keydown.enter)="refresh()" placeholder="Input and press Enter for Search" />
+  <label for="completedFilter">Hide completed</label>
+  <input name="completedFilter" type="checkbox" [(ngModel)]="completedFilter"
+         (change)="refresh()" class="form-check" />
+  <select (change)="orderBy($event.target.value)" >
+    <option *ngFor="let o of orderTypes" [ngValue]="o">{{o.value}}</option>
+  </select>
 </form>
 <div *ngIf="!tasks.length">Loading...</div>
 <div *ngFor="let t of tasks">
