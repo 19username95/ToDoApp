@@ -46,6 +46,7 @@
     <None Remove="ClientApp\src\app\404-page\404-page.module.ts" />
     <None Remove="ClientApp\src\app\models\task.ts" />
     <None Remove="ClientApp\src\app\services\data.service.ts" />
+    <None Remove="ClientApp\src\constants.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +56,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\models\task.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\data.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\constants.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

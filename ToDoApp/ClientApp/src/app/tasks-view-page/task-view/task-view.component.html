@@ -1,8 +1,26 @@
+<form>
+  <input name="searchString" type="text" [(ngModel)]="searchString" class="form-control"
+         (keydown.enter)="refresh()" placeholder="Input and press Enter for Search" />
+  <label for="completedFilter">Hide completed</label>
+  <input name="completedFilter" type="checkbox" [(ngModel)]="completedFilter"
+         (change)="refresh()" class="form-check" />
+  <select (change)="orderBy($event.target.value)">
+    <option *ngFor="let o of orderTypes" [ngValue]="o">{{o.value}}</option>
+  </select>
+  <select (change)="perPageChange($event.target.value)">
+    <option [ngValue]="8">8</option>
+    <option [ngValue]="16">16</option>
+    <option [ngValue]="32">32</option>
+  </select>
+  <button (click)="goPrevPage()">prev page</button>
+  <span>{{pageIndex + 1}}</span>
+  <button (click)="goNextPage()">next page</button>
+</form>
 <div *ngIf="!tasks.length">Loading...</div>
 <div *ngFor="let t of tasks">
   <span>  {{t?.title}}  </span>
   <span>  {{t?.dueDate}}  </span>
-  <span>  {{t?.isComplete}} </span>
+  <span (click)="changeCompleteStatus(t.id)">  {{t?.isComplete}} </span>
   <span *ngIf="t.id" routerLink="/task/{{t.id}}"> <button>edit</button></span>
 </div>
 

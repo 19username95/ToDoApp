@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { TasksViewPageRoutingModule } from './tasks-view-page-routing.module';
 import { TaskViewComponent } from './task-view/task-view.component';
@@ -9,7 +10,8 @@ import { TaskViewComponent } from './task-view/task-view.component';
   declarations: [TaskViewComponent],
   imports: [
     CommonModule,
-    TasksViewPageRoutingModule
+    TasksViewPageRoutingModule,
+    FormsModule
   ]
 })
 export class TasksViewPageModule { }
