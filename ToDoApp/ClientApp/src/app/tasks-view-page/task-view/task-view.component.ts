@@ -58,11 +58,13 @@ export class TaskViewComponent implements OnInit {
     const task = this.tasks.find(t => t.id === id);
     task.isComplete = !task.isComplete;
     const res = await this.dataService.updateTask(task);
+    this.pageIndex = 0;
     this.refresh();
   }
 
   async orderBy(value) {
     this.selectedOrder = value;
+    this.pageIndex = 0;
     this.refresh();
   }
 

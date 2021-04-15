@@ -1,0 +1,91 @@
+.router-link {
+    margin-left: 20px;
+}
+
+.tasks-view-box {
+  margin-top: 20px;
+
+  .tasks-view-box__header {
+    display: flex;
+    flex-direction: column;
+
+    .tasks-view-box__search {
+    }
+
+    .tasks-view-box__selects {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 10px 0;
+
+      .tasks-view-box__complitedFilter {
+        display: flex;
+        align-self: center;
+        justify-self: center;
+        width: 15%;
+        min-width: 150px;
+        justify-content: space-between;
+        align-items: center;
+
+        .tasks-view-box__complitedFilterLabel {
+        }
+
+        .tasks-view-box__complitedFilterCheckbox {
+        }
+      }
+    }
+
+    .tasks-view-box__orderBy {
+      align-self: center;
+      justify-self: center;
+      width: 15%;
+      min-width: 150px;
+    }
+  }
+
+  .page-control {
+    display: flex;
+    flex-direction: column;
+
+    .page-control__perpage-label {
+      padding-bottom: 5px;
+    }
+
+    .page-control__perpage-select {
+      width: 15%;
+      min-width: 110px;
+    }
+
+    .page-control__page-manage-box {
+      padding: 10px 0;
+      align-self: center;
+      display: flex;
+      justify-content: space-between;
+      width: 27%;
+      max-width: 150px;
+
+      .page-control__control-button {
+        
+      }
+
+      .page-control__page-index {
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .tasks-view-box {
+    .tasks-view-box__header {
+      .tasks-view-box__selects {
+        .tasks-view-box__complitedFilter {
+          min-width: 110px;
+        }
+      }
+
+      .tasks-view-box__orderBy {
+        min-width: 110px;
+      }
+    }
+  }
+}
