@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Task } from '../../models/task';
 import { DataService } from '../../services/data.service';
 
@@ -16,7 +17,8 @@ export class EditTaskComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private dataService: DataService) {
+              private dataService: DataService,
+              private titleService: Title) {
     try {
       this.route.params.subscribe(async (data) => {
         await this.dataService.getTask(data.id)
@@ -25,6 +27,7 @@ export class EditTaskComponent implements OnInit {
           });
       });
 
+      this.titleService.setTitle("Edit Task");
     }
     catch { }
   }
