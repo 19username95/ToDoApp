@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Task } from '../../models/task';
 import { DataService } from '../../services/data.service';
 
@@ -15,8 +16,8 @@ export class EditTaskComponent implements OnInit {
   task: Task;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private dataService: DataService) {
+              private dataService: DataService,
+              private titleService: Title) {
     try {
       this.route.params.subscribe(async (data) => {
         await this.dataService.getTask(data.id)
@@ -25,6 +26,7 @@ export class EditTaskComponent implements OnInit {
           });
       });
 
+      this.titleService.setTitle("Edit Task");
     }
     catch { }
   }
@@ -32,18 +34,13 @@ export class EditTaskComponent implements OnInit {
   ngOnInit() {
   }
 
-  async save(f: NgForm) {
-    this.task.title = f.value.title;
-    this.task.dueDate = f.value.dueDate;
-
+  async save() {
     try {
       const res = await this.dataService.updateTask(this.task);
       console.log('res', res)
     } catch (err) {
       console.log('err', err)
     }
-
-    this.router.navigateByUrl('/tasks');
   }
 
   async delete() {
@@ -53,7 +50,5 @@ export class EditTaskComponent implements OnInit {
     } catch (err) {
       console.log('err', err)
     }
-
-    this.router.navigateByUrl('/tasks');
   }
 }

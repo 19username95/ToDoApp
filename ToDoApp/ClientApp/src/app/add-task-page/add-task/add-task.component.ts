@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Task } from '../../models/task';
 import { DataService } from '../../services/data.service';
 
@@ -12,21 +12,20 @@ import { DataService } from '../../services/data.service';
 export class AddTaskComponent implements OnInit {
   task: Task = new Task;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService,
+              private titleService: Title) {
     this.refresh();
+    this.titleService.setTitle("Add Task");
   }
 
   ngOnInit() {
   }
 
-  async add(f: NgForm) {
-    this.task.title = f.value.title;
-    this.task.dueDate = f.value.dueDate;
+  async add() {
 
     try {
       const res = await this.dataService.createTask(this.task);
       console.log('res', res)
-      this.refresh();
     } catch(err) {
       console.log('err', err)
     }

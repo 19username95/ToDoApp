@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from "@angular/platform-browser";
 import { Task } from '../../models/task';
 import { DataService } from '../../services/data.service';
 import { ORDERBY_TYPES } from './../../constants';
@@ -10,7 +11,6 @@ import { ORDERBY_TYPES } from './../../constants';
   providers: [DataService]
 })
 export class TaskViewComponent implements OnInit {
-  task: Task = new Task();
   tasks: Task[];
   tasksResponse: { array: Array<Object>, count: number };
   orderTypes: Array<Object>;
@@ -22,7 +22,8 @@ export class TaskViewComponent implements OnInit {
   pageIndex = 0;
   pagesCount = 0;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private titleService: Title) {
+    this.titleService.setTitle("Tasks");
   }
 
   ngOnInit() {
@@ -38,6 +39,7 @@ export class TaskViewComponent implements OnInit {
     this.tasks = this.tasksResponse.array;
     this.setCurrentPagesCount();
   }
+
   async refresh() {
     this.tasksResponse = await this.dataService.getTasks({
       'title': this.searchString,
@@ -58,11 +60,13 @@ export class TaskViewComponent implements OnInit {
     const task = this.tasks.find(t => t.id === id);
     task.isComplete = !task.isComplete;
     const res = await this.dataService.updateTask(task);
+    this.pageIndex = 0;
     this.refresh();
   }
 
   async orderBy(value) {
     this.selectedOrder = value;
+    this.pageIndex = 0;
     this.refresh();
   }
 

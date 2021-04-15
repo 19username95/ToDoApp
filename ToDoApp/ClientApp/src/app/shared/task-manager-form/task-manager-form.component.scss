@@ -1,0 +1,23 @@
+.tasks-form {
+  width: 50%;
+  min-width: 280px;
+  margin: auto;
+
+  .tasks-form__buttons {
+    display: grid;
+    margin: 20px auto 20px 0;
+    grid-row-gap: 15px;
+
+    .tasks-form__edit-buttons {
+      display: grid;
+      grid-template-columns: auto auto;
+      column-gap: 15px;
+    }
+
+    .tasks-form__add-button {
+    }
+
+    .tasks-form__cancel-button {
+    }
+  }
+}

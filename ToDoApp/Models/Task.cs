@@ -13,7 +13,7 @@ namespace ToDoApp.Models
         public string Title { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DueDate { get; set; }
 
         public bool IsComplete { get; set; }
