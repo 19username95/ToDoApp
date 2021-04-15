@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { EditTaskPageRoutingModule } from './edit-task-page-routing.module';
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
   imports: [
     CommonModule,
     EditTaskPageRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class EditTaskPageModule { }

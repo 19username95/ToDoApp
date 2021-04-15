@@ -16,7 +16,6 @@ export class EditTaskComponent implements OnInit {
   task: Task;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
               private dataService: DataService,
               private titleService: Title) {
     try {
@@ -35,18 +34,13 @@ export class EditTaskComponent implements OnInit {
   ngOnInit() {
   }
 
-  async save(f: NgForm) {
-    this.task.title = f.value.title;
-    this.task.dueDate = f.value.dueDate;
-
+  async save() {
     try {
       const res = await this.dataService.updateTask(this.task);
       console.log('res', res)
     } catch (err) {
       console.log('err', err)
     }
-
-    this.router.navigateByUrl('/tasks');
   }
 
   async delete() {
@@ -56,7 +50,5 @@ export class EditTaskComponent implements OnInit {
     } catch (err) {
       console.log('err', err)
     }
-
-    this.router.navigateByUrl('/tasks');
   }
 }
