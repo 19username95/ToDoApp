@@ -1,1 +1,55 @@
-<p>task-view works!</p>
+<a class="router-link" routerLink="/add-task">Add New Task...</a>
+
+<!-- TODO: separate components -->
+<div class="tasks-view-box">
+  <div class="tasks-view-box__header">
+    <input class="tasks-view-box__search" name="searchString" type="text" [(ngModel)]="searchString" class="form-control"
+           (keydown.enter)="refresh()" placeholder="Input and press Enter for Search" />
+    <div class="tasks-view-box__selects">
+      <div class="tasks-view-box__complitedFilter">
+        <label for="completedFilter" class="form-check-label tasks-view-box__complitedFilterLabel">Hide completed</label>
+        <input name="completedFilter" type="checkbox" [(ngModel)]="completedFilter"
+               (change)="refresh()" class="form-check tasks-view-box__complitedFilterCheckbox" />
+      </div>
+
+      <select class="custom-select tasks-view-box__orderBy" (change)="orderBy($event.target.value)">
+        <option *ngFor="let o of orderTypes" [ngValue]="o">{{o.value}}</option>
+      </select>
+    </div>
+  </div>
+
+  <table class="table tasks-view-box__tasks-table tasks-table">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Complete</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of tasks" class="tasks-view">
+        <th scope="row">{{t?.title}}</th>
+        <td>{{t?.dueDate | date: 'MM-dd-yyyy'}}</td>
+        <td>
+          <input class="form-check" type="checkbox" (change)="changeCompleteStatus(t.id)" [checked]="t?.isComplete" />
+        </td>
+        <td *ngIf="t.id" routerLink="/task/{{t.id}}"><i class="fa fa-edit x5"></i></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="tasks-view-box__page-control page-control">
+    <div class="page-control__page-manage-box">
+      <div class="page-control__control-button" (click)="goPrevPage()"><i class="fa fa-arrow-left"></i></div>
+      <div class="page-control__page-index">{{pageIndex + 1}}</div>
+      <div class="page-control__control-button" (click)="goNextPage()"><i class="fa fa-arrow-right"></i></div>
+    </div>
+    <div class="page-control__perpage-label">tasks per page: </div>
+    <select class="custom-select page-control__perpage-select" (change)="perPageChange($event.target.value)">
+      <option [ngValue]="8">8</option>
+      <option [ngValue]="16">16</option>
+      <option [ngValue]="32">32</option>
+    </select>
+  </div>
+</div>

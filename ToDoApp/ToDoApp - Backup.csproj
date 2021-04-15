@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -13,46 +13,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.14" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
-    <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
-    <PackageReference Include="Numind.AspNetCore.SpaServices.Extensions" Version="1.0.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.12" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Compile Remove="ClientApp\src\app\404-page\**" />
-    <Compile Remove="Data\**" />
     <Content Remove="$(SpaRoot)**" />
     <Content Remove="ClientApp\src\app\404-page\**" />
-    <Content Remove="Data\**" />
     <EmbeddedResource Remove="ClientApp\src\app\404-page\**" />
-    <EmbeddedResource Remove="Data\**" />
     <None Remove="$(SpaRoot)**" />
     <None Remove="ClientApp\src\app\404-page\**" />
-    <None Remove="Data\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\404-page\404-page-routing.module.ts" />
     <None Remove="ClientApp\src\app\404-page\404-page.module.ts" />
-    <None Remove="ClientApp\src\app\models\task.ts" />
-    <None Remove="ClientApp\src\app\services\data.service.ts" />
-    <None Remove="ClientApp\src\constants.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\models\task.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\services\data.service.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\constants.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
