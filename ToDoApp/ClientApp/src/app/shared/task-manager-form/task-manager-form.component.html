@@ -1,21 +1,19 @@
-<div>
-  <form (ngSubmit)="submit()" class="tasks-form">
-    <div>
-      <label>Title</label>
-      <input name="title" type="text" [(ngModel)]="task.title" class="form-control" />
-    </div>
-    <div>
-      <label>Due Date</label>
-      <input name="dueDate" type="date" [(ngModel)]="task.dueDate" class="form-control" />
-    </div>
+<form (ngSubmit)="submit()" class="tasks-form">
+  <div>
+    <label>Title</label>
+    <input name="title" type="text" [(ngModel)]="task.title" class="form-control" />
+  </div>
+  <div>
+    <label>Due Date</label>
+    <input name="dueDate" type="date" [(ngModel)]="task.dueDate" class="form-control" />
+  </div>
 
-    <div class="tasks-form__buttons" [ngSwitch]="this.formType == 'add'">
-      <div class="tasks-form__edit-buttons" *ngSwitchCase="false">
-        <input type="button" value="Delete" class="btn btn-danger" (click)="delete()" routerLink="/tasks" />
-        <input type="submit" value="Save" class="btn btn-warning" routerLink="/tasks" />
-      </div>
-      <input *ngSwitchCase="true" type="submit" value="Add" class="btn btn-success" routerLink="/tasks" />
-      <input type="button" value="Cancel" class="btn btn-dark" routerLink="/tasks" />
+  <div class="tasks-form__buttons" [ngSwitch]="this.formType == 'add'">
+    <div class="tasks-form__edit-buttons" *ngSwitchCase="false">
+      <input type="button" value="Delete" class="btn btn-danger" (click)="delete()" routerLink="/tasks" />
+      <input type="button" (click)="submit()" value="Save" class="btn btn-warning" routerLink="/tasks" />
     </div>
-  </form>
-</div>
+    <input *ngSwitchCase="true" type="submit" value="Add" class="btn btn-success tasks-form__add-button" routerLink="/tasks" />
+    <input type="button" value="Cancel" class="btn btn-dark tasks-form__cancel-button" routerLink="/tasks" />
+  </div>
+</form>
