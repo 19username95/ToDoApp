@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from "@angular/platform-browser";
 import { Task } from '../../models/task';
 import { DataService } from '../../services/data.service';
 import { ORDERBY_TYPES } from './../../constants';
@@ -21,7 +22,8 @@ export class TaskViewComponent implements OnInit {
   pageIndex = 0;
   pagesCount = 0;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private titleService: Title) {
+    this.titleService.setTitle("Tasks");
   }
 
   ngOnInit() {
