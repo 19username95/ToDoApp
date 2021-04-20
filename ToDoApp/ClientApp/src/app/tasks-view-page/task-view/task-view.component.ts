@@ -53,7 +53,7 @@ export class TaskViewComponent implements OnInit {
   }
 
   setCurrentPagesCount() {
-    this.pagesCount = Math.round(this.tasksResponse.count / this.perPage);
+    this.pagesCount = Math.ceil(this.tasksResponse.count / this.perPage);
   }
 
   async changeCompleteStatus(id) {

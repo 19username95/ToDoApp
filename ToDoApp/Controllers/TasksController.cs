@@ -92,7 +92,7 @@ namespace ToDoApp.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTask(int id, Models.Task task)
         {
-            if (id != task.Id)
+            if (id != task.Id || (task.DueDate.Date < DateTime.Now.Date))
             {
                 return BadRequest();
             }
@@ -123,6 +123,11 @@ namespace ToDoApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Models.Task>> PostTask(Models.Task task)
         {
+            if (task.DueDate.Date < DateTime.Now.Date)
+            {
+                return BadRequest();
+            }
+
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
 
